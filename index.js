@@ -3,6 +3,7 @@ const Discord = require('discord.js');
 const bot = new Discord.Client();
 var fs = require('fs'),
     readline = require('readline');
+const socks = require('./socks.js');
 
 /*
 invite link: https://discordapp.com/oauth2/authorize?client_id=277958138873774082&scope=bot&permissions=1544027263
@@ -238,11 +239,11 @@ bot.on('message', message => {
         if(mess == '!help'){
             if(guildID == kotoID)
                 message.reply("Chirp! Chirp! ( ・８ ・) I'm kotoBot and here are the things I can do!~ "+
-                "`!emote`, `!learn`, `!flip`, `!roll`, `!joke`, `!bday`, `!share`, `!chirp`, `!iam pure`, `!8ball`"+
+                "`!emote`, `!learn`, `!flip`, `!roll`, `!joke`, `!bday`, `!share`, `!chirp`, `!iam pure`, `!8ball`, `!kotopic`"+
                 "\nAdd 'help' after any command to know more about it!");
             else
                 message.reply("Chirp! Chirp! ( ・８ ・) I'm kotoBot and here are the things I can do!~ "+
-                "`!emote`, `!learn`, `!flip`, `!roll`, `!joke`, `!share`, `!chirp`"+
+                "`!emote`, `!learn`, `!flip`, `!roll`, `!joke`, `!share`, `!chirp`, `!kotopic`"+
                 "\nAdd 'help' after any command to know more about it!");
         }else if(wmess == '!emotehelp')
             message.reply("Tells user how to send an emote. To send an emote, just type the emote name " + 
@@ -272,6 +273,8 @@ bot.on('message', message => {
             message.reply("Adds Pure Birb role, which hides #lewds channel. To unhide #lewds, type in `!iam shameless`.");
         else if(wmess == '!8ballhelp')
             message.reply("It's a magic 8 ball. Answers question. What did you expect?");
+        else if(wmess == '!kotopichelp')
+            message.reply("Sends random kotori screenshot from anime.")
         
     //!emote
         if(mess == '!emote')
@@ -281,10 +284,10 @@ bot.on('message', message => {
         if(mess == '!flip'){
             let roll = Math.floor(Math.random() * 2) + 1;
             if(roll == 1){
-                message.reply("heads!");
+                message.channel.sendFile("http://i66.tinypic.com/rm699l.jpg");
             }
             else if (roll == 2){
-                message.reply("tails!");
+                message.channel.sendFile("http://i66.tinypic.com/zls89.jpg");
             }
         }
 
@@ -439,7 +442,7 @@ bot.on('message', message => {
                             phrases = phrases.join();                           //convert to newline-seperated list
                             while (phrases.includes(','))
                                 phrases = phrases.replace(',', '\n');
-                            var writeReplace = fs.createWriteStream(writePath);                                           //replace
+                            let writeReplace = fs.createWriteStream(writePath);                                           //replace
                             message.channel.sendMessage('Oh alright, I will forget about ' + cmess + ' ever existing!');  //message
                             writeReplace.write(phrases);
                         }else
@@ -659,9 +662,20 @@ bot.on('message', message => {
         }
 
         //random
-        var sayings = ["SECRET"];
+        var sayings = ['chun!~ ♡♡♡', 'chirp! ( ・８ ・)', 'UMI-CHAN ONEGAII', '<:KotoCry:273273885619781642>', '!ban @rindesk', 'Kotori did nothing wrong',
+                   '♡', '<:kotoSmug:268069343756156928>', 'MUDA MUDA MUDA',
+                   'Blueberry Train but every blueberry is replaced with the Thomas the Tank Engine theme', 'kotoBot > Yuudachi kai',
+                   'birbCopter goes chirpchirpchirpchirpchirp', 'tfw chun', "I'm supposed to be playing love live but this one song keeps kick my ass",
+                   "There! Right There!\nLook at that tan, well tinted skin.\nLook at the killer shape he's in.\nLook at that slightly stubbly chin."+
+                   "Oh Please he's gay, totally gay.", '#CHIRPALERT - News just in: does Kami is gay???????', 'Heyyyy Bsauce, Kotori here. Today we\'re '+
+                   'going to ask the question: What IS Umi-chan onegaii?', "Then the birb nation attacked...",
+                   "https://s19.postimg.org/vi6oy7uir/kototriggered.gif", "Nico Nico N---I mean CHIRP ( ・８ ・')",
+                   "https://pbs.twimg.com/media/B6poCgcCMAAvI8G.jpg"];
         var decide = Math.floor(Math.random() * rarity.random);
         var choose = Math.floor(Math.random() * sayings.length);
         if(decide == 1 && !nonoChannel)
             message.channel.sendMessage(sayings[choose]);
 });
+
+
+bot.login(socks.chunchun);
