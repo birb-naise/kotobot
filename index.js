@@ -10,7 +10,7 @@ invite link: https://discordapp.com/oauth2/authorize?client_id=27795813887377408
 date rindesk left: 2/10/2017
 
 NOTE: code for message fever has been omitted from this file
-*/
+*/ 
 
 //start-up message
 var auto = false;
