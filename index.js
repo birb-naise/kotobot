@@ -8,11 +8,13 @@ const socks = require('./socks.js');
 /*
 invite link: https://discordapp.com/oauth2/authorize?client_id=277958138873774082&scope=bot&permissions=1544027263
 date rindesk left: 2/10/2017
+
+NOTE: code for message fever has been omitted from this file
 */
 
 //start-up message
 var auto = false;
-var autoMess = "turtles";
+var autoMess = "**chirp. super rare super special message fever OVER**";
 
 //emotes
     var emotes = {
@@ -74,7 +76,7 @@ var autoMess = "turtles";
     }
     var rarity = {          //chance of sending message (1 out of x)
         random: 500,
-        learn: 225
+        learn: 500
     }
 
 //web previews
@@ -134,12 +136,12 @@ var nonoChans = ['rules', 'announcements', 'fan-arts', 'alpacaxkotori', 'picture
     bot.on('ready', () =>{
         if(auto){
             let server = bot.guilds.get(kotoID);
-            server.channels.get(kotoServer[0]).sendMessage(autoMess);
+            server.channels.get(kotoServer[1]).sendMessage(autoMess);
         }
     });
 //guild events
     //user leave
-    bot.on('guildMemberRemove', member => {
+    /*bot.on('guildMemberRemove', member => {
         let guild = member.guild,
             user = member.user;
         let guildID = guild.id.toString(),
@@ -173,7 +175,7 @@ var nonoChans = ['rules', 'announcements', 'fan-arts', 'alpacaxkotori', 'picture
 
         guild.channels.get(kotoServer[3]).sendMessage('CHIRP ( ・８ ・) `' + (user.username) + '™` has flown into ' + guildName + '.\n'+
                                          rules + emote);
-    });
+    });*/
 
 //message event
 bot.on('message', message => {
@@ -198,6 +200,11 @@ bot.on('message', message => {
         for(i = 0; i < nonoChans.length; i++){
             if(message.channel.name == nonoChans[i])
                 nonoChannel = true;
+        }
+
+        if(mess.startsWith("!say ")){
+            mess = mess.replace("!say ", "");
+            message.channel.sendMessage(mess);
         }
 
     //read stream
@@ -597,9 +604,9 @@ bot.on('message', message => {
         }
 
         //good morning
-        if(mess.includes != 'morning class' && mess.includes('the morning') == false && mess.includes("it's morning") == false &&
+        if(mess.includes ('morning class') == false && mess.includes('the morning') == false && mess.includes("it's morning") == false &&
         mess.includes('this morning') == false && mess.includes('not morning') == false && mess.includes('early morning') == false &&
-        mess.includes('good morning') || mess.includes('morning')){
+        mess.includes('the morning') == false && mess.includes('at morning') == false && mess.includes('good morning') || mess.includes('morning')){
             if(timeYet.day){
                 then = now;
                 message.channel.sendMessage('Good morning! ♡');
@@ -633,19 +640,14 @@ bot.on('message', message => {
         }
         if(autoChun && mess.includes('chirp') && message.author.username == 'Toiry921')
             message.channel.sendMessage('CHIRP');
+        if(mess == ':uratag:')
+            message.channel.sendFile('https://s19.postimg.org/y2ku9wd37/uratag.png');
 
         //@kotoBot
         if(mess.includes('<@277958138873774082>'))
                 message.reply(serverEmotes[Math.floor(Math.random() * serverEmotes.length)]);
 
     //random repliers-----------------
-        for(var chance in rarity){
-            if(guildID == kotoID){                                      //double !learn if from kotori server
-                rarity[chance] *= 2;
-                if (rarity[chance] == 1000) rarity[chance] = 500;
-            }
-        }
-
         //renounce !learn
         var spout = Math.floor(Math.random() * rarity.learn) + 1;
         if(spout == 1 && !nonoChannel){
@@ -676,6 +678,5 @@ bot.on('message', message => {
         if(decide == 1 && !nonoChannel)
             message.channel.sendMessage(sayings[choose]);
 });
-
 
 bot.login(socks.chunchun);
